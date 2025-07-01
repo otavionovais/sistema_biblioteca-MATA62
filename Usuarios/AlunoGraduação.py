@@ -1,4 +1,4 @@
-
+from datetime import datetime, timedelta
 from Usuarios.IUsuario import IUsuario
 
 
@@ -34,7 +34,7 @@ class AlunoGraduação(IUsuario):
     
     def mudar_situacao_devedor(self):
         self._esta_devendo = not self._esta_devendo
-        
+
     def adicionar_reserva_ativa(self, reserva):
         self._reservas_ativas.append(reserva)
 
