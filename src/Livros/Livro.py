@@ -5,8 +5,14 @@ class Livro(ILivro):
         super().__init__(id, titulo, autor, ano_publicacao, editora, edicao)
         self._disponivel = True
         self._reservas = []
-        self._emprestimos = []
+        self._exemplares = []
 
+    def qtd_exemplares_disponiveis(self):
+        return sum(1 for exemplar in self._exemplares if exemplar.esta_disponivel())
+    
+    def usuario_tem_reserva(self, usuario):
+        return any(reserva.get_usuario() == usuario for reserva in self._reservas)
+    
     def get_id(self):
         return self._id
 
