@@ -1,0 +1,10 @@
+from Commands import IComando
+
+
+class ComandoConsultaLivro(IComando):
+    def __init__(self, id_livro):
+        self._id = id_livro
+
+    def executar(self):
+        # lógica de exibição de dados do livro
+        print("Consultando livro")

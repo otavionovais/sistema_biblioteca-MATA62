@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from Emprestimo import RegraEmprestimoAluno
 from Usuarios.IUsuario import IUsuario
 
 

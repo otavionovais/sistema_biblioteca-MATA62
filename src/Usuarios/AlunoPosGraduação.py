@@ -1,5 +1,5 @@
 from Usuarios.IUsuario import IUsuario
-from Regras.RegraEmprestimoAluno import RegraEmprestimoAluno
+from Emprestimo.RegraEmprestimoAluno import RegraEmprestimoAluno
 class AlunoPosGraduacao(IUsuario):
     LIMITE_EMPRESTIMO = 3
     DIAS_EMPRESTIMO = 5
