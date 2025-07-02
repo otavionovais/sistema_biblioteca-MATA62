@@ -5,6 +5,7 @@ class IUsuario(ABC):
     def __init__(self, id, nome):
         self._id = id
         self._nome = nome
+        self.tipo_usuario = self.__class__.__name__
         self._esta_devendo = False
         self._emprestimos_ativos = []
         self._reservas_ativas = []
@@ -14,7 +15,10 @@ class IUsuario(ABC):
     @abstractmethod
     def get_id(self):
         pass
-        
+    
+    @abstractmethod
+    def get_tipo_usuario(self):
+        return self.tipo_usuario
     
     @abstractmethod
     def get_nome(self):
