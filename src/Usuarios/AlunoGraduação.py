@@ -10,11 +10,13 @@ class AlunoGraduação(IUsuario):
         super().__init__(id, nome)
         self._limite_emprestimo = self.LIMITE_EMPRESTIMO
         self._dias_emprestimo = self.DIAS_EMPRESTIMO
+        self._regra = RegraEmprestimoAluno(limite_emprestimos=2, dias_emprestimo=4)
     
     def get_id(self):
         return self._id
     
     def get_nome(self):
+        
         return self._nome
     
     def get_esta_devendo(self):
