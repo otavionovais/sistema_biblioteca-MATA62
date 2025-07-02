@@ -67,3 +67,4 @@ class IUsuario(ABC):
     @abstractmethod    
     def remover_emprestimo_ativo(self):
         pass
+  
