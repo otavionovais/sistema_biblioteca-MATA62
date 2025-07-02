@@ -3,9 +3,9 @@ from Livros.ILivro import ILivro
 class Livro(ILivro):
     def __init__(self, id, titulo, autor, ano_publicacao, editora, edicao):
         super().__init__(id, titulo, autor, ano_publicacao, editora, edicao)
-        self._disponivel = True
         self._reservas = []
         self._exemplares = []
+        self._emprestimos = []
 
     def qtd_exemplares_disponiveis(self):
         return sum(1 for exemplar in self._exemplares if exemplar.esta_disponivel())
@@ -25,11 +25,14 @@ class Livro(ILivro):
     def get_ano_publicacao(self):
         return self._ano_publicacao
 
-    def is_disponivel(self):
-        return self._disponivel
-
     def adicionar_reserva(self, reserva):
         self._reservas.append(reserva)
 
     def adicionar_emprestimo(self, emprestimo):
         self._emprestimos.append(emprestimo)
+    
+    def adicionar_exemplar(self, exemplar):
+        self._exemplares.append(exemplar)
+    
+    def get_exemplares(self):
+        return self._exemplares
