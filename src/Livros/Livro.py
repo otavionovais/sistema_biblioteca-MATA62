@@ -6,6 +6,7 @@ class Livro(ILivro):
         self._reservas = []
         self._exemplares = []
         self._emprestimos = []
+        self._observadores = []
 
     def qtd_exemplares_disponiveis(self):
         return sum(1 for exemplar in self._exemplares if exemplar.esta_disponivel())
@@ -27,6 +28,8 @@ class Livro(ILivro):
 
     def adicionar_reserva(self, reserva):
         self._reservas.append(reserva)
+        if len(self._reservas) > 2:
+            self.notificar_observadores
 
     def adicionar_emprestimo(self, emprestimo):
         self._emprestimos.append(emprestimo)
@@ -36,3 +39,11 @@ class Livro(ILivro):
     
     def get_exemplares(self):
         return self._exemplares
+    
+    def adicionar_observador(self, observador):
+        if observador not in self._observadores:
+            self._observadores.append(observador)
+    
+    def notificar_observadores(self):
+        for observador in self._observadores:
+            observador.notificar(self)

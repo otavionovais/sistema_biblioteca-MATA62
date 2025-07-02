@@ -1,12 +1,15 @@
 from Usuarios.IUsuario import IUsuario
+from Observer.IObserver import IObserver
 from Emprestimo.RegraEmprestimoProfessor import RegraEmprestimoProfessor
 
-class Professor(IUsuario):
+class Professor(IUsuario, IObserver):
     def __init__(self, id, nome):
         super().__init__(id, nome)
         self._limite_emprestimo = 5
         self._dias_emprestimo = 8
+        self._notificacoes = 0
         self._regra = RegraEmprestimoProfessor()
+
     def get_id(self):
         return self._id
     
@@ -40,6 +43,9 @@ class Professor(IUsuario):
     def remover_reserva_ativa(self, reserva):
         if reserva in self._reservas_ativas:
             self._reservas_ativas.remove(reserva)   
+            
+    def notificar(self, livro):
+        self._notificacoes += 1
 
 
 
