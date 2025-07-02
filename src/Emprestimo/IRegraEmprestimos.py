@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-class IEmprestimos(ABC):
+class IRegraEmprestimos(ABC):
 
     @abstractmethod
     def emprestimo_permitido(self, usuario, livro) -> (bool,str):

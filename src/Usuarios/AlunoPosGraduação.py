@@ -1,5 +1,5 @@
 from Usuarios.IUsuario import IUsuario
-
+from Regras.RegraEmprestimoAluno import RegraEmprestimoAluno
 class AlunoPosGraduacao(IUsuario):
     LIMITE_EMPRESTIMO = 3
     DIAS_EMPRESTIMO = 5
@@ -8,6 +8,7 @@ class AlunoPosGraduacao(IUsuario):
         super().__init__(id, nome)
         self._limite_emprestimo = self.LIMITE_EMPRESTIMO
         self._dias_emprestimo = self.DIAS_EMPRESTIMO
+        self._regra = RegraEmprestimoAluno(limite_emprestimos=3, dias_emprestimo=5)
     
     def get_id(self):
         return self._id
