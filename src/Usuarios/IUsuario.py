@@ -67,4 +67,18 @@ class IUsuario(ABC):
     @abstractmethod    
     def remover_emprestimo_ativo(self):
         pass
-  
+
+    @abstractmethod
+    def tem_emprestimo_ativo_do_livro(self, livro_a_verificar):
+        pass
+    
+    @abstractmethod
+    def get_historico_emprestimos(self):
+        pass
+
+    @abstractmethod
+    def tem_reserva_para_livro(self, livro_a_verificar):
+        for reserva in self._reservas_ativas:
+            if reserva.get_livro().get_id() == livro_a_verificar.get_id():
+                return True
+        return False

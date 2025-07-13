@@ -20,6 +20,7 @@ class Exemplar:
             raise Exception("Exemplar não está disponível.")
         self._disponivel = False
         self._emprestimo_corrente = emprestimo # Armazena o empréstimo atual
+   
 
     def devolver(self): # Nome alterado para maior clareza
         self._disponivel = True

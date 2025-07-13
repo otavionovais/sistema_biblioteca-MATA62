@@ -16,5 +16,5 @@ class RegraEmprestimoProfessor(IRegraEmprestimos):
         # Professores não têm limite de livros nem restrição por reserva
         return True, None
 
-    def prazo_emprestimo(self):
+    def dias_emprestimo(self):
         return self._dias

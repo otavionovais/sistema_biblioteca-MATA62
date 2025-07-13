@@ -19,7 +19,7 @@ class RegraEmprestimoAluno(IRegraEmprestimos):
             return (False, motivo)
             
         # Regra 2: Usuário não pode ser devedor [cite: 32]
-        if usuario.esta_devedor():
+        if usuario.get_esta_devendo():
             motivo = "o usuário está em débito (possui livros em atraso)."
             return (False, motivo)
 
@@ -52,5 +52,5 @@ class RegraEmprestimoAluno(IRegraEmprestimos):
             return False, "Livro reservado por outro usuário"
         return (True, "Empréstimo permitido.")
     
-    def prazo_emprestimo(self):
+    def dias_emprestimo(self):
         return self._dias

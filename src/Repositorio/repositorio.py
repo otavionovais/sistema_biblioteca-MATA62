@@ -31,7 +31,7 @@ class Repositorio:
         # Usar dicionários para busca rápida por código é mais eficiente
         self._usuarios = {}
         self._livros = {}
-
+        self._emprestimos = []
         self._carregar_usuarios()
         self._carregar_livros_e_exemplares()
         print("Dados de teste carregados no repositório.")
@@ -84,6 +84,9 @@ class Repositorio:
             if livro:
                 exemplar = Exemplar(dados["cod_exemplar"], livro)
                 livro.adicionar_exemplar(exemplar)
+    def registrar_emprestimo(self, emprestimo):
+        """Adiciona um novo empréstimo à lista de histórico do sistema."""
+        self._emprestimos.append(emprestimo)
 
     def buscar_usuario_por_codigo(self, codigo_usuario):
         """

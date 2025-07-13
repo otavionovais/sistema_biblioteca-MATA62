@@ -7,7 +7,7 @@ class IRegraEmprestimos(ABC):
         pass
     
     @abstractmethod
-    def prazo_emprestimo(self) -> int:
+    def dias_emprestimo(self) -> int:
         pass    
 
    

@@ -29,7 +29,7 @@ class Livro(ILivro):
     def adicionar_reserva(self, reserva):
         self._reservas.append(reserva)
         if len(self._reservas) > 2:
-            self.notificar_observadores
+            self.notificar_observadores()
 
     def adicionar_emprestimo(self, emprestimo):
         self._emprestimos.append(emprestimo)
@@ -49,3 +49,6 @@ class Livro(ILivro):
             observador.notificar(self)
     def is_disponivel(self):
         return super().is_disponivel()
+
+    def get_reservas(self):
+        return self._reservas

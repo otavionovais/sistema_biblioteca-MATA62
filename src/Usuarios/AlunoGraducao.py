@@ -12,6 +12,8 @@ class AlunoGraduacao(IUsuario):
         self._limite_emprestimo = self.LIMITE_EMPRESTIMO
         self._dias_emprestimo = self.DIAS_EMPRESTIMO
         self._regra = RegraEmprestimoAluno(limite_emprestimo=2, dias_emprestimo=4)
+        self._historico_emprestimos = []
+        self._reservas_ativas = []
     
     def get_id(self):
         return self._id
@@ -24,10 +26,17 @@ class AlunoGraduacao(IUsuario):
         return self._nome
     
     def get_esta_devendo(self):
-        return self._esta_devendo 
+        for emprestimo in self.get_emprestimos_ativos():
+            if datetime.now() > emprestimo.get_data_devolucao_prevista():
+                return True
+        return False
       
     def get_emprestimos_ativos(self):
-        return self._emprestimos_ativos
+        ativos = []
+        for emp in self._historico_emprestimos:
+            if not emp.esta_finalizado():
+                ativos.append(emp)
+        return ativos
     
     def get_emprestimos(self):
         return self._emprestimos
@@ -44,12 +53,17 @@ class AlunoGraduacao(IUsuario):
     def adicionar_reserva_ativa(self, reserva):
         self._reservas_ativas.append(reserva)
 
+    def tem_reserva_para_livro(self, livro_a_verificar):
+        
+        for reserva in self._reservas_ativas:
+            if reserva.get_livro().get_id() == livro_a_verificar.get_id():
+                return True 
+        
+        return False 
+    
     def adicionar_emprestimo_ativo(self, emprestimo):
-
-       if len(self._emprestimos_ativos) < self._limite_emprestimo:
-           self._emprestimos_ativos.append(emprestimo)
-       else:
-            raise ValueError("Limite de empréstimos ativos atingido.")
+        self._historico_emprestimos.append(emprestimo)
+   
        
     def remover_reserva_ativa(self, reserva):
         if reserva in self._reservas_ativas:
@@ -58,13 +72,22 @@ class AlunoGraduacao(IUsuario):
             raise ValueError("Reserva não encontrada nas reservas ativas.")
         
     def remover_emprestimo_ativo(self, emprestimo):
-        if emprestimo in self._emprestimos_ativos:
-            self._emprestimos_ativos.remove(emprestimo)
+        if emprestimo in self._historico_emprestimos:
+            self._historico_emprestimos.remove(emprestimo)
         else:
             raise ValueError("Empréstimo não encontrado nos empréstimos ativos.")           
     
     def get_regra_emprestimo(self):
         return self._regra
 
-    def tem_emprestimo_ativo(self):
-        return len(self._emprestimos_ativos) > 0
+    def tem_emprestimo_ativo_do_livro(self, livro_a_verificar):
+    
+        for emprestimo in self._emprestimos_ativos:
+            if emprestimo.get_livro().get_id() == livro_a_verificar.get_id():
+                return True 
+        
+        return False 
+    
+  
+    def get_historico_emprestimos(self):
+        return self._historico_emprestimos

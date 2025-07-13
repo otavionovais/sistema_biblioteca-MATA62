@@ -9,6 +9,7 @@ class Professor(IUsuario, IObserver):
         self._dias_emprestimo = 8
         self._notificacoes = 0
         self._regra = RegraEmprestimoProfessor()
+        self._historico_emprestimos = []
 
     def get_id(self):
         return self._id
@@ -23,7 +24,7 @@ class Professor(IUsuario, IObserver):
         return self._esta_devendo
     
     def get_emprestimos_ativos(self):
-        return self._emprestimos_ativos
+        return self._historico_emprestimos
     
     def get_emprestimos(self):
         return self._emprestimos
@@ -41,7 +42,7 @@ class Professor(IUsuario, IObserver):
         self._reservas_ativas.append(reserva)
 
     def adicionar_emprestimo_ativo(self, emprestimo):
-        self._emprestimos_ativos.append(emprestimo) 
+        self._historico_emprestimos.append(emprestimo) 
 
     def remover_reserva_ativa(self, reserva):
         if reserva in self._reservas_ativas:
@@ -49,13 +50,39 @@ class Professor(IUsuario, IObserver):
             
     def notificar(self, livro):
         self._notificacoes += 1
-    def remover_emprestimo_ativo(self):
-        return super().remover_emprestimo_ativo()
+        
+    def get_numero_notificacoes(self):
+        return self._notificacoes
+    
+    def remover_emprestimo_ativo(self, emprestimo):
+        if emprestimo in self._historico_emprestimos:
+            self._historico_emprestimos.remove(emprestimo)
+        else:
+            raise ValueError("Empréstimo não encontrado nos empréstimos ativos.") 
+        
     def get_regra_emprestimo(self):
         return self._regra
+    
     def tem_emprestimo_ativo(self):
-        return len(self._emprestimos_ativos) > 0
+        return len(self._historico_emprestimos) > 0
+    
+    def tem_reserva_para_livro(self, livro_a_verificar):
+       
+        for reserva in self._reservas_ativas:
+            if reserva.get_livro().get_id() == livro_a_verificar.get_id():
+                return True 
+        
+        return False 
 
-
+    def tem_emprestimo_ativo_do_livro(self, livro_a_verificar):
+    
+        for emprestimo in self._emprestimos_ativos:
+            if emprestimo.get_livro().get_id() == livro_a_verificar.get_id():
+                return True 
+        
+        return False 
+    
+    def get_historico_emprestimos(self):
+        return self._historico_emprestimos
 
 

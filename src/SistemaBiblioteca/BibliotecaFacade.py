@@ -65,7 +65,8 @@ class BibliotecaFacade:
             return f"Erro: Nenhum empréstimo ativo do livro {codigo_livro} encontrado para este usuário."
         
         # Lógica para finalizar o empréstimo
-        emprestimo_ativo.finalizar() # Muda o status interno e registra a data real de devolução
+        data_hoje = datetime.now()
+        emprestimo_ativo.finalizar(data_hoje) # Muda o status interno e registra a data real de devolução
         
         # Lógica para o exemplar voltar a ficar disponível
         exemplar = emprestimo_ativo.get_exemplar()
@@ -127,7 +128,7 @@ class BibliotecaFacade:
         output.append("Exemplares:")
         for exemplar in livro.get_exemplares():
             status = "Disponível" if exemplar.esta_disponivel() else "Emprestado"
-            output.append(f"  - Código: {exemplar.get_codigo()} | Status: {status}") 
+            output.append(f"  - Código: {exemplar.get_id()} | Status: {status}") 
             if not exemplar.esta_disponivel():
                 # Exibe detalhes do empréstimo corrente do exemplar. [cite: 63]
                 emp = exemplar.get_emprestimo_corrente()

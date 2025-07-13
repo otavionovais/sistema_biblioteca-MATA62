@@ -1,15 +1,9 @@
 # em main.py ou app.py
 
 # Importe suas classes de Comando e a Fachada
-from Command.CommandConsultaInfos import ComandoConsultaUsuario
-from Command.CommandConsultaLivro import ComandoConsultaLivros
-from Command.CommandConsultaNoti import ComandoConsultaNotificacoes
-from Command.CommandDevolucao import ComandoDevolver
-from Command.CommandEmprestar import ComandoEmprestar
-from Command.CommandRegistrarObs import ComandoRegistrarObservador
-from Command.CommandReserva import ComandoReservar
+
+from BancoDeDados.Comandos import ComandoConsultaLivros, ComandoConsultaNotificacoes, ComandoConsultaUsuario, ComandoDevolver, ComandoEmprestar, ComandoRegistrarObservador, ComandoReservar, ComandoSair
 from SistemaBiblioteca.BibliotecaFacade import BibliotecaFacade
-from Command.CommandSair import ComandoSair
 
 class ConsoleUI:
     """
@@ -54,6 +48,7 @@ class ConsoleUI:
                     print(f"Erro: Comando '{comando_str}' não reconhecido.")
                     continue
 
+
                 # Extrai os argumentos para o construtor do comando
                 argumentos = partes[1:]
                 
@@ -64,7 +59,7 @@ class ConsoleUI:
                 comando_obj.executar()
 
             except TypeError:
-                print(f"Erro: Número incorreto de argumentos para o comando '{comando_str}'.")
+                print(f"Erro: Número incorreto de argumentos para o comando '{comando_str}': {e}")
             except Exception as e:
                 print(f"Ocorreu um erro inesperado: {e}")
 
