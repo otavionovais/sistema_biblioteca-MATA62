@@ -1,5 +1,6 @@
 {
     "python.analysis.extraPaths": [
-        "./src/Livros"
+        "./src/Livros",
+        "./src/repositorio"
     ]
 }

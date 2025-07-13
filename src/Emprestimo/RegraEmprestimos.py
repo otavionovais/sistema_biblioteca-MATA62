@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 class IRegraEmprestimos(ABC):
 
     @abstractmethod
-    def emprestimo_permitido(self, usuario, livro) -> (bool,str):
+    def pode_emprestar(self, usuario, livro) -> (bool,str): # type: ignore
         pass
     
     @abstractmethod

@@ -47,3 +47,5 @@ class Livro(ILivro):
     def notificar_observadores(self):
         for observador in self._observadores:
             observador.notificar(self)
+    def is_disponivel(self):
+        return super().is_disponivel()

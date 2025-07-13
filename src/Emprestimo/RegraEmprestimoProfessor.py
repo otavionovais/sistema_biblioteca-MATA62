@@ -1,4 +1,4 @@
-from IRegraEmprestimos import IRegraEmprestimos
+from Emprestimo.RegraEmprestimos import IRegraEmprestimos
 
 class RegraEmprestimoProfessor(IRegraEmprestimos):
     def __init__(self):
@@ -16,5 +16,5 @@ class RegraEmprestimoProfessor(IRegraEmprestimos):
         # Professores não têm limite de livros nem restrição por reserva
         return True, None
 
-    def dias_emprestimo(self):
+    def prazo_emprestimo(self):
         return self._dias

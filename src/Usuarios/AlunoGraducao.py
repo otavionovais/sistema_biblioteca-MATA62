@@ -1,8 +1,9 @@
 from datetime import datetime, timedelta
+from Emprestimo.RegraEmprestimoAluno import RegraEmprestimoAluno
 from Usuarios.IUsuario import IUsuario
 
 
-class AlunoGraduação(IUsuario):
+class AlunoGraduacao(IUsuario):
     LIMITE_EMPRESTIMO = 2
     DIAS_EMPRESTIMO = 4
     
@@ -10,10 +11,13 @@ class AlunoGraduação(IUsuario):
         super().__init__(id, nome)
         self._limite_emprestimo = self.LIMITE_EMPRESTIMO
         self._dias_emprestimo = self.DIAS_EMPRESTIMO
-        self._regra = RegraEmprestimoAluno(limite_emprestimos=2, dias_emprestimo=4)
+        self._regra = RegraEmprestimoAluno(limite_emprestimo=2, dias_emprestimo=4)
     
     def get_id(self):
         return self._id
+
+    def get_tipo_usuario(self):
+        return "Aluno Graduação"
     
     def get_nome(self):
         
@@ -58,4 +62,9 @@ class AlunoGraduação(IUsuario):
             self._emprestimos_ativos.remove(emprestimo)
         else:
             raise ValueError("Empréstimo não encontrado nos empréstimos ativos.")           
-   
+    
+    def get_regra_emprestimo(self):
+        return self._regra
+
+    def tem_emprestimo_ativo(self):
+        return len(self._emprestimos_ativos) > 0

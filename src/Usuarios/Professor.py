@@ -13,6 +13,9 @@ class Professor(IUsuario, IObserver):
     def get_id(self):
         return self._id
     
+    def get_tipo_usuario(self):
+        return "Professor"
+    
     def get_nome(self):
         return self._nome
     
@@ -46,6 +49,12 @@ class Professor(IUsuario, IObserver):
             
     def notificar(self, livro):
         self._notificacoes += 1
+    def remover_emprestimo_ativo(self):
+        return super().remover_emprestimo_ativo()
+    def get_regra_emprestimo(self):
+        return self._regra
+    def tem_emprestimo_ativo(self):
+        return len(self._emprestimos_ativos) > 0
 
 
 

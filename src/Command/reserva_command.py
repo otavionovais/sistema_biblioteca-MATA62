@@ -1,10 +1,10 @@
-import Command
-from Repositorio import Repositorio
+from Command.Comando import Command
+from Repositorio import repositorio
 
 class ReservaCommand(Command):
 
     def executar(self, id_usuario, id_livro):
-        repositorio = Repositorio()
+        repositorio = repositorio()
         usuario = repositorio.get_usuario(id_usuario)
         livro = repositorio.get_livro(id_livro)
 

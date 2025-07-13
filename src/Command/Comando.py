@@ -1,7 +1,8 @@
 from abc import ABC, abstractmethod
 
 class Command(ABC):
-
+    
     @abstractmethod
-    def execute(self, *args):
+    def executar(self):
+        """Executa o comando."""
         pass
