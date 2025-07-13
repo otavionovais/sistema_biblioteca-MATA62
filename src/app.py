@@ -2,7 +2,7 @@
 
 # Importe suas classes de Comando e a Fachada
 
-from BancoDeDados.Comandos import ComandoConsultaLivros, ComandoConsultaNotificacoes, ComandoConsultaUsuario, ComandoDevolver, ComandoEmprestar, ComandoRegistrarObservador, ComandoReservar, ComandoSair
+from Comandos.Comandos import ComandoConsultaLivros, ComandoConsultaNotificacoes, ComandoConsultaUsuario, ComandoDevolver, ComandoEmprestar, ComandoRegistrarObservador, ComandoReservar, ComandoSair
 from SistemaBiblioteca.BibliotecaFacade import BibliotecaFacade
 
 class ConsoleUI:
