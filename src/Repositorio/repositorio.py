@@ -53,7 +53,7 @@ class Repositorio:
             {"codigo": "200", "titulo": "Code Complete", "editora": "Microsoft Press", "autores": "Steve McConnell", "edicao": "2a", "ano": "2014"}, 
             {"codigo": "300", "titulo": "Refactoring: Improving the Design of Existing Code", "editora": "Addison Wesley Professional", "autores": "Martin Fowler", "edicao": "1a", "ano": "1999"}, 
             {"codigo": "400", "titulo": "Design Patterns: Element of Reusable Object-Oriented Software", "editora": "Addison Wesley Professional", "autores": "Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides", "edicao": "1a", "ano": "1994"}, 
-
+        ]
         for dados in dados_livros:
             livro = Livro(dados["codigo"], dados["titulo"], dados["editora"], dados["autores"], dados["edicao"], dados["ano"])
             self._livros[livro.get_id()] = livro
