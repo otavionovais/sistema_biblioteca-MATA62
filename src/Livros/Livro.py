@@ -43,10 +43,15 @@ class Livro(ILivro):
     def adicionar_observador(self, observador):
         if observador not in self._observadores:
             self._observadores.append(observador)
+
+    def remover_observador(self, observador):
+        if observador in self._observadores:
+            self._observadores.remove(observador)
     
     def notificar_observadores(self):
         for observador in self._observadores:
             observador.notificar(self)
+
     def is_disponivel(self):
         return super().is_disponivel()
 

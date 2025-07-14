@@ -1,29 +1,31 @@
-# em main.py ou app.py
+# app.py (Corrigido)
 
-# Importe suas classes de Comando e a Fachada
-
-from Comandos.Comandos import ComandoConsultaLivros, ComandoConsultaNotificacoes, ComandoConsultaUsuario, ComandoDevolver, ComandoEmprestar, ComandoRegistrarObservador, ComandoReservar, ComandoSair
-from SistemaBiblioteca.BibliotecaFacade import BibliotecaFacade
+# 1. Importar os gerenciadores e o repositório, além dos comandos
+from Repositorio.repositorio import Repositorio
+from Gerenciadores.Gerenciadores import GerenciadorDeConsultas, GerenciadorDeEmprestimos, GerenciadorDeInteracoes
+from Comandos.Comandos import * # Usando os comandos refatorados
 
 class ConsoleUI:
     """
-    Esta é a classe exigida pela Seção 5.5, responsável pela interação
-    com o usuário via console.
+    Interface de console adaptada para a arquitetura com Gerenciadores.
     """
     def __init__(self):
-        # A fachada é instanciada aqui para ser usada pelos comandos
-        self.facade = BibliotecaFacade()
+        # 2. Obter a instância do repositório e criar os gerenciadores
+        repositorio = Repositorio()
+        self.gerenciador_emprestimos = GerenciadorDeEmprestimos(repositorio)
+        self.gerenciador_interacoes = GerenciadorDeInteracoes(repositorio)
+        self.gerenciador_consultas = GerenciadorDeConsultas(repositorio)
 
-        # O mapeamento dos comandos para as classes que os executam
+        # 3. Mapear comandos para uma tupla: (ClasseDoComando, GerenciadorNecessario)
         self.comandos = {
-            "emp": ComandoEmprestar,
-            "dev": ComandoDevolver,
-            "liv": ComandoConsultaLivros,
-            "usu": ComandoConsultaUsuario,
-            "res": ComandoReservar,
-            "obs": ComandoRegistrarObservador,
-            "ntf": ComandoConsultaNotificacoes,
-            "sai": ComandoSair
+            "emp": (ComandoEmprestar, self.gerenciador_emprestimos),
+            "dev": (ComandoDevolver, self.gerenciador_emprestimos),
+            "res": (ComandoReservar, self.gerenciador_interacoes),
+            "obs": (ComandoRegistrarObservador, self.gerenciador_interacoes),
+            "liv": (ComandoConsultaLivro, self.gerenciador_consultas),
+            "usu": (ComandoConsultaUsuario, self.gerenciador_consultas),
+            "ntf": (ComandoConsultaNotificacoes, self.gerenciador_consultas),
+            "sai": (ComandoSair, None) # 'sai' não precisa de gerenciador
         }
 
     def iniciar(self):
@@ -42,24 +44,28 @@ class ConsoleUI:
                     continue
 
                 comando_str = partes[0].lower()
-                ClasseDoComando = self.comandos.get(comando_str)
-
-                if not ClasseDoComando:
+                
+                if comando_str not in self.comandos:
                     print(f"Erro: Comando '{comando_str}' não reconhecido.")
                     continue
-
-
-                # Extrai os argumentos para o construtor do comando
+                
+                # 4. Desempacotar a classe e o gerenciador do mapeamento
+                ClasseDoComando, gerenciador = self.comandos.get(comando_str)
                 argumentos = partes[1:]
                 
-                # Cria a instância do comando com seus argumentos
-                comando_obj = ClasseDoComando(*argumentos)
+                # Tratamento especial para comandos sem gerenciador
+                if gerenciador:
+                    # 5. Injetar o gerenciador ao criar a instância do comando
+                    comando_obj = ClasseDoComando(gerenciador, *argumentos)
+                else:
+                    # Caso do 'sai', que não tem argumentos nem gerenciador
+                    comando_obj = ClasseDoComando(*argumentos)
                 
                 # Executa o comando
                 comando_obj.executar()
 
             except TypeError:
-                print(f"Erro: Número incorreto de argumentos para o comando '{comando_str}': {e}")
+                print(f"Erro: Número incorreto de argumentos para o comando '{comando_str}'. Verifique a entrada.")
             except Exception as e:
                 print(f"Ocorreu um erro inesperado: {e}")
 

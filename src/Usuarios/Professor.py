@@ -1,8 +1,7 @@
 from Usuarios.IUsuario import IUsuario
-from Observer.IObserver import IObserver
 from Emprestimo.RegraEmprestimoProfessor import RegraEmprestimoProfessor
 
-class Professor(IUsuario, IObserver):
+class Professor(IUsuario):
     def __init__(self, id, nome):
         super().__init__(id, nome)
         self._limite_emprestimo = 5

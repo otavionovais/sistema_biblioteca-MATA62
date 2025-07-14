@@ -11,6 +11,7 @@ class IUsuario(ABC):
         self._reservas_ativas = []
         self._emprestimos = []
         self._reservas = []
+        self._notificacoes = 0 
     
     @abstractmethod
     def get_id(self):
@@ -82,3 +83,10 @@ class IUsuario(ABC):
             if reserva.get_livro().get_id() == livro_a_verificar.get_id():
                 return True
         return False
+    
+    def notificar(self, livro):
+        self._notificacoes += 1
+        print(f"Usuário '{self.get_nome()}' notificado sobre o livro '{livro.get_titulo()}'. Total: {self._notificacoes}")
+
+    def get_numero_notificacoes(self):
+        return self._notificacoes
